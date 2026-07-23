@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { MapPin, ArrowUpRight, Clock, ChevronRight, Settings2 } from "lucide-react";
 import { AppHeader } from "@/components/AppHeader";
@@ -7,6 +7,8 @@ import { ALL_ACTIONS, DEFAULT_IDS } from "@/lib/quick-actions";
 import { getQuickActions, useAuth } from "@/lib/auth";
 import { CustomizeQuickActionsModal } from "@/components/CustomizeQuickActionsModal";
 import { AnnouncementsMarquee, AllAnnouncementsModal, MOCK_ANNOUNCEMENTS } from "@/components/Announcements";
+import { FaceAuthModal } from "@/components/FaceAuthModal";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/")({
   ssr: false,
@@ -23,11 +25,14 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [now, setNow] = useState<Date>(() => new Date());
   const [punchedIn, setPunchedIn] = useState(true);
   const [customize, setCustomize] = useState(false);
   const [showAll, setShowAll] = useState(false);
   const [ids, setIds] = useState<string[]>(DEFAULT_IDS);
+  const [faceAuthOpen, setFaceAuthOpen] = useState(false);
+  const [pendingPunch, setPendingPunch] = useState(false);
 
   useEffect(() => {
     const stored = getQuickActions();
@@ -45,14 +50,31 @@ function Index() {
   const greeting = now.getHours() < 12 ? "Good Morning" : now.getHours() < 18 ? "Good Afternoon" : "Good Evening";
   const firstName = (user?.name ?? "there").split(" ")[0];
 
+  function handlePunchClick() {
+    setPendingPunch(true);
+    setFaceAuthOpen(true);
+  }
+
+  function handleFaceVerified() {
+    setFaceAuthOpen(false);
+    setPendingPunch(false);
+    setPunchedIn((v) => !v);
+    toast.success(punchedIn ? "Punched out successfully" : "Punched in successfully");
+  }
+
+  function handleFaceCancel() {
+    setFaceAuthOpen(false);
+    setPendingPunch(false);
+  }
+
   return (
     <div className="min-h-screen bg-background pb-16">
       <AppHeader
-        title={`${firstName} 👋`}
+        title={firstName}
         subtitle={`${greeting} · ${now.toLocaleDateString(undefined, { weekday: "long", day: "numeric", month: "long" })}`}
       />
 
-      <main className="mx-auto -mt-10 max-w-7xl px-4 sm:-mt-14 sm:px-6 lg:px-10">
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <section className="grid gap-4 lg:grid-cols-3">
           <div className="rounded-3xl bg-card p-6 sm:p-8 lg:col-span-2" style={{ boxShadow: "var(--shadow-card)" }}>
             <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-4">
@@ -76,8 +98,9 @@ function Index() {
             </div>
 
             <button
-              onClick={() => setPunchedIn((v) => !v)}
-              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-base font-semibold text-white transition hover:opacity-95"
+              onClick={handlePunchClick}
+              disabled={pendingPunch}
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-4 text-base font-semibold text-white transition hover:opacity-95 disabled:opacity-70"
               style={{ background: "var(--gradient-primary)", boxShadow: "var(--shadow-glow)" }}
             >
               <span className="h-2 w-2 rounded-full bg-white" />
@@ -129,6 +152,7 @@ function Index() {
             {actions.map(({ icon: Icon, label, desc, tint, id }) => (
               <button
                 key={id}
+                onClick={() => navigate({ to: "/attendance" })}
                 className="group relative rounded-2xl bg-card p-4 text-left transition hover:-translate-y-0.5 sm:p-5"
                 style={{ boxShadow: "var(--shadow-card)" }}
               >
@@ -151,6 +175,11 @@ function Index() {
 
       <CustomizeQuickActionsModal open={customize} current={ids} onClose={() => setCustomize(false)} />
       <AllAnnouncementsModal open={showAll} items={MOCK_ANNOUNCEMENTS} onClose={() => setShowAll(false)} />
+      <FaceAuthModal
+        open={faceAuthOpen}
+        onVerified={handleFaceVerified}
+        onCancel={handleFaceCancel}
+      />
 
       <footer className="mt-16 border-t border-border py-6">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 text-xs text-muted-foreground md:flex-row lg:px-10">

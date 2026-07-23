@@ -35,13 +35,13 @@ export function AppHeader({
       className="relative overflow-hidden text-white mb-[100px]"
       style={gradient ? { background: "var(--gradient-hero)" } : undefined}
     >
-      <div className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-10">
         <nav className="flex items-center justify-between gap-3">
           <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-9 w-9 place-items-center rounded-xl bg-white/15 backdrop-blur">
+            <div className="grid h-8 w-8 place-items-center rounded-xl bg-white/15 backdrop-blur">
               <span className="text-sm font-bold">W</span>
             </div>
-            <span className="text-lg font-semibold tracking-tight">Workday</span>
+            <span className="text-base font-semibold tracking-tight">Workday</span>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
@@ -51,7 +51,7 @@ export function AppHeader({
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`rounded-full px-4 py-2 text-sm transition ${active ? "bg-white text-teal-700 font-semibold" : "text-white/85 hover:bg-white/15"}`}
+                  className={`rounded-full px-3.5 py-1.5 text-sm transition ${active ? "bg-white text-teal-700 font-semibold" : "text-white/85 hover:bg-white/15"}`}
                 >
                   {n.label}
                 </Link>
@@ -62,10 +62,10 @@ export function AppHeader({
           <div className="flex items-center gap-2">
             <button
               aria-label="Notifications"
-              className="relative grid h-10 w-10 place-items-center rounded-full bg-white/15 backdrop-blur transition hover:bg-white/25"
+              className="relative grid h-9 w-9 place-items-center rounded-full bg-white/15 backdrop-blur transition hover:bg-white/25"
             >
               <Bell className="h-4 w-4" />
-              <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
+              <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-red-500" />
             </button>
             <button
               onClick={() => {
@@ -73,16 +73,16 @@ export function AppHeader({
                 navigate({ to: "/login" });
               }}
               aria-label="Sign out"
-              className="hidden h-10 w-10 place-items-center rounded-full bg-white/15 backdrop-blur transition hover:bg-white/25 sm:grid"
+              className="hidden h-9 w-9 place-items-center rounded-full bg-white/15 backdrop-blur transition hover:bg-white/25 sm:grid"
             >
               <LogOut className="h-4 w-4" />
             </button>
-            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-white font-semibold text-teal-700">
+            <div className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-sm font-semibold text-teal-700">
               {initials}
             </div>
             <button
               onClick={() => setOpen((v) => !v)}
-              className="grid h-10 w-10 place-items-center rounded-full bg-white/15 backdrop-blur md:hidden"
+              className="grid h-9 w-9 place-items-center rounded-full bg-white/15 backdrop-blur md:hidden"
               aria-label="Menu"
             >
               {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -114,13 +114,13 @@ export function AppHeader({
           </div>
         )}
 
-        <div className="pb-10 pt-6 sm:pb-14 sm:pt-8">
+        <div className="pb-5 pt-4 sm:pb-7 sm:pt-5">
           {subtitle && (
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/75">
               {subtitle}
             </p>
           )}
-          <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+          <h1 className="mt-0.5 text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
             {title}
           </h1>
         </div>
