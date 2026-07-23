@@ -1,0 +1,137 @@
+UI/UX Improvements & Feature Enhancements
+
+Please make the following changes without changing the existing theme, branding, or color palette. Keep the current design language and only improve the UI, UX, responsiveness, and functionality.
+
+Global Changes
+Header
+Add 100px bottom margin below the header on every page so the page content never overlaps the gradient header.
+Reduce the overall height of the header to make it more compact.
+Remove the 👋 (wave) icon from the header.
+Improve spacing and alignment to create a cleaner and more modern appearance.
+Home Page
+Requirement 1: Face Authentication for Punch In/Out
+
+When the user clicks the Punch In or Punch Out button:
+
+Display the same Face Authentication popup used during the first login.
+Ask the user to verify their face before continuing.
+After successful face verification, continue with the Punch In or Punch Out process.
+If verification fails, do not allow punching.
+Requirement 2: Quick Actions Navigation
+
+When the user clicks any card inside the Quick Actions section:
+
+Redirect the user to the Attendance page.
+The corresponding popup or action should open automatically after navigation if applicable.
+Attendance Page
+Requirement 1: Redesign Attendance Summary
+
+Redesign the section displaying:
+
+Total Days
+Working Days
+Days Worked
+
+Use a cleaner card layout with better typography, spacing, icons, and visual hierarchy.
+
+Requirement 2: Add Total Regularization
+
+In the Attendance Summary section, add a new metric:
+
+Total Regularizations
+
+It should follow the same design style as the other summary cards.
+
+Requirement 3: Interactive Calendar
+
+Make every calendar date clickable.
+
+When a user clicks any date:
+
+Open a modal or side panel displaying:
+
+Punch In Time
+Punch Out Time
+Total Working Hours
+Attendance Status
+Present
+Absent
+On Leave
+Holiday
+Weekly Off
+
+If the selected date is Absent, display a Regularize button.
+
+When the user clicks Regularize:
+
+Open a Regularization popup containing:
+
+Date
+Reason
+Remarks
+Attachment (optional)
+Submit button
+
+After submission, send the request using the appropriate API.
+
+Requirement 4: Leave Balance
+
+Remove the Apply button from all Leave Balance cards.
+
+Only display:
+
+Leave Type
+Available Balance
+Requirement 5: Quick Requests
+
+Rename the actions as follows:
+
+Apply Regularization
+Apply Outdoor
+Apply Leave
+
+Each card should be clickable.
+
+Clicking any card should open its corresponding application popup or modal.
+
+The forms should include all required fields and submit through APIs.
+
+Replace the existing Extra Time option with Apply Leave.
+
+Requirement 6: Remove Today's Punches
+
+Completely remove the Today's Punches section from the Attendance page.
+
+Profile Page
+Requirement 1: Editable Profile
+
+When the user clicks the Edit Profile button:
+
+Enable editing of all editable profile fields.
+Display Save and Cancel buttons.
+Validate inputs before saving.
+Submit changes through the update profile API.
+Requirement 2: Editable Personal Information
+
+Allow users to edit information inside the Personal Information accordions, including:
+
+About Me
+Address
+Emergency Contact
+Identity Proof
+Education
+Family
+Bank Details
+Documents (where applicable)
+
+Each section should:
+
+Open in edit mode when selected.
+Validate required fields.
+Save data through the corresponding API.
+Final Notes
+Do not change the application's existing theme or branding.
+Maintain the same color palette and overall design language.
+Improve spacing, alignment, responsiveness, animations, and usability.
+Ensure all new modals, forms, and interactions follow the same design system used throughout the application.
+All forms and user actions should be connected to APIs and include proper loading states, validation, success messages, and error handling.
