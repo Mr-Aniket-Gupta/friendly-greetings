@@ -9,17 +9,30 @@ const nav = [
   { to: "/profile", label: "Profile" },
 ] as const;
 
-export function AppHeader({ title, subtitle, gradient = true }: { title: string; subtitle?: string; gradient?: boolean }) {
+export function AppHeader({
+  title,
+  subtitle,
+  gradient = true,
+}: {
+  title: string;
+  subtitle?: string;
+  gradient?: boolean;
+}) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const [open, setOpen] = useState(false);
 
-  const initials = (user?.name ?? "U").split(" ").map((s) => s[0]).slice(0, 2).join("").toUpperCase();
+  const initials = (user?.name ?? "U")
+    .split(" ")
+    .map((s) => s[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
 
   return (
     <header
-      className="relative overflow-hidden text-white"
+      className="relative overflow-hidden text-white mb-[100px]"
       style={gradient ? { background: "var(--gradient-hero)" } : undefined}
     >
       <div className="mx-auto max-w-7xl px-4 pt-5 sm:px-6 lg:px-10">
@@ -55,7 +68,10 @@ export function AppHeader({ title, subtitle, gradient = true }: { title: string;
               <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-red-500" />
             </button>
             <button
-              onClick={() => { setUser(null); navigate({ to: "/login" }); }}
+              onClick={() => {
+                setUser(null);
+                navigate({ to: "/login" });
+              }}
               aria-label="Sign out"
               className="hidden h-10 w-10 place-items-center rounded-full bg-white/15 backdrop-blur transition hover:bg-white/25 sm:grid"
             >
@@ -87,7 +103,10 @@ export function AppHeader({ title, subtitle, gradient = true }: { title: string;
               </Link>
             ))}
             <button
-              onClick={() => { setUser(null); navigate({ to: "/login" }); }}
+              onClick={() => {
+                setUser(null);
+                navigate({ to: "/login" });
+              }}
               className="rounded-xl px-3 py-2 text-left text-sm text-white hover:bg-white/15"
             >
               Sign out
@@ -97,9 +116,13 @@ export function AppHeader({ title, subtitle, gradient = true }: { title: string;
 
         <div className="pb-10 pt-6 sm:pb-14 sm:pt-8">
           {subtitle && (
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">{subtitle}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
+              {subtitle}
+            </p>
           )}
-          <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">{title}</h1>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
+            {title}
+          </h1>
         </div>
       </div>
       <div className="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
